@@ -5,7 +5,7 @@ import { api, HydrateClient } from "~/trpc/server";
 export default async function Home() {
   return (
     <HydrateClient>
-      <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-tr from-[#000000] from-75% via-teal-500 to-[#ffffff] text-white">
+      <main className="flex min-h-screen flex-col items-center justify-center bg-gradient-to-bl from-[#000000] from-15% via-teal-500 to-[#ffffff] text-white">
         <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
           <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
             Create <span className="text-[hsl(0,0%,0%)]">T3</span> App
