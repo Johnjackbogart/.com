@@ -1,9 +1,9 @@
+//TODO fix imports, remove _components
 import "~/styles/globals.css";
-
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
-
 import { TRPCReactProvider } from "~/trpc/react";
+import Nav from "~/components/navbar";
 
 export const metadata: Metadata = {
   title: "Hi :)",
@@ -17,6 +17,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${GeistSans.variable}`}>
       <body>
+        <Nav />
         <TRPCReactProvider>{children}</TRPCReactProvider>
       </body>
     </html>
