@@ -1,9 +1,7 @@
 "use client";
-//TODO
-//ADD MY LOGO
-//FIX PACKAGE
 import { useLayoutEffect, useState } from "react";
 import { Button } from "./ui/button";
+import JackBogart from "./logos/JackBogart";
 import Github from "./logos/GitHub";
 //import pkg from "@/package.json";
 
@@ -29,10 +27,12 @@ export const Nav = () => {
   return (
     <div
       className={
-        "z-50 flex h-14 items-center border-b border-border bg-card px-4 py-2"
+        "z-50 flex h-14 items-center overflow-visible border-b border-border bg-card px-4 py-2"
       }
     >
-      <div>{/** TODO * put logo here */}</div>
+      <div>
+        <JackBogart />
+      </div>
       <div className={"ml-auto flex items-center gap-1"}>
         <Button
           onClick={() => {

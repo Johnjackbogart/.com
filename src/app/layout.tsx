@@ -1,4 +1,3 @@
-//TODO fix imports, remove _components
 import "~/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
@@ -6,6 +5,7 @@ import { TRPCReactProvider } from "~/trpc/react";
 import Nav from "~/components/navbar";
 
 export const metadata: Metadata = {
+  name: "viewport",
   title: "Hi :)",
   description: "My Personal Website, welcome!",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
