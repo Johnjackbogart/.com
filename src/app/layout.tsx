@@ -5,10 +5,10 @@ import { TRPCReactProvider } from "~/trpc/react";
 import Nav from "~/components/navbar";
 
 export const metadata: Metadata = {
-  name: "viewport",
   title: "Hi :)",
   description: "My Personal Website, welcome!",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
+  themeColor: "#000000",
 };
 
 export default function RootLayout({
