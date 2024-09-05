@@ -30,7 +30,7 @@ export const Nav = () => {
         "z-50 flex h-14 items-center overflow-visible border-b border-border bg-card px-4 py-2"
       }
     >
-      <div>
+      <div className={"mt-auto"}>
         <JackBogart />
       </div>
       <div className={"ml-auto flex items-center gap-1"}>

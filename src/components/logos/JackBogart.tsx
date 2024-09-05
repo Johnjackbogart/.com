@@ -2,11 +2,12 @@ import * as React from "react";
 import type { SVGProps } from "react";
 const JackBogart = (props: SVGProps<SVGSVGElement>) => (
   <svg
-    className={"overflow-visible"}
+    className={
+      "overflow-visible fill-white stroke-zinc-800 dark:fill-zinc-700 dark:stroke-zinc-100"
+    }
     viewBox="0 0 850 450"
     width="320px"
     height="160px"
-    fill="currentColor"
     xmlns="http://www.w3.org/2000/svg"
     preserveAspectRatio="xMidYMid"
     {...props}
