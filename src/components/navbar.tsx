@@ -27,7 +27,7 @@ export const Nav = () => {
   return (
     <div
       className={
-        "z-50 flex h-14 items-center overflow-visible border-b border-border bg-card px-4 py-2"
+        "w-m z-50 flex h-14 items-center overflow-visible border-b border-border bg-card px-4 py-2"
       }
     >
       <div className={"mt-auto"}>
