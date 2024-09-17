@@ -1,9 +1,9 @@
-import "~/styles/globals.css";
+import "@/styles/globals.css";
 import { GeistSans } from "geist/font/sans";
 import { type Metadata } from "next";
-import { TRPCReactProvider } from "~/trpc/react";
-import Nav from "~/components/navbar";
-import ThemeProvider from "~/components/theme-provider";
+import { TRPCReactProvider } from "@/trpc/react";
+import Nav from "&/navbar";
+import ThemeProvider from "&/theme-provider";
 
 export const metadata: Metadata = {
   title: "Hi :)",

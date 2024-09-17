@@ -1,6 +1,6 @@
 import Link from "next/link";
-import PlayGround from "~/components/three/playground";
-import { api, HydrateClient } from "~/trpc/server";
+import PlayGround from "&/three/playground";
+import { api, HydrateClient } from "@/trpc/server";
 
 export default async function Home() {
   return (
