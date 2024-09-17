@@ -13,9 +13,9 @@ export default function PlayGround() {
             colliders={"hull"}
             restitution={2}
             rotation={[0, 0.3, 2]}
-            angularVelocity={[0, 1, 0]}
+            angularVelocity={[1, 1, 1]}
           >
-            <TorusKnot args={[]} />
+            <TorusKnot args={[1.5, 0.1, 1000, 10, 4, 12]} />
           </RigidBody>
         </Physics>
       </Suspense>
