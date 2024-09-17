@@ -10,7 +10,7 @@ import {
 } from "./ui/dropdown-menu";
 import JackBogart from "./logos/JackBogart";
 import Github from "./logos/GitHub";
-//import pkg from "@/package.json";
+import pkg from "~/../package.json";
 
 export const Nav = () => {
   const { setTheme } = useTheme();
@@ -24,6 +24,17 @@ export const Nav = () => {
         <JackBogart />
       </div>
       <div className={"ml-auto flex items-center gap-1"}>
+        <Button
+          onClick={() => {
+            window.open(pkg.homepage, "_blank", "noopener noreferrer");
+          }}
+          variant={"ghost"}
+          className={"ml-auto flex items-center gap-1.5"}
+        >
+          <span>
+            <Github className={"size-4"} />
+          </span>
+        </Button>
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <Button variant="outline" size="icon">
