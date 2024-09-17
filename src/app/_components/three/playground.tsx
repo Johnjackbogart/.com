@@ -15,7 +15,7 @@ export default function PlayGround() {
             rotation={[0, 0.3, 2]}
             angularVelocity={[1, 1, 1]}
           >
-            <TorusKnot args={[1.5, 0.1, 1000, 10, 4, 12]} />
+            <TorusKnot args={[1.5, 0.1, 1000, 10, 2, 5]} />
           </RigidBody>
         </Physics>
       </Suspense>
