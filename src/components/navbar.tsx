@@ -1,35 +1,19 @@
 "use client";
-import { useLayoutEffect, useState } from "react";
+import { Moon, Sun } from "lucide-react";
+import { useTheme } from "next-themes";
 import { Button } from "./ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "./ui/dropdown-menu";
 import JackBogart from "./logos/JackBogart";
 import Github from "./logos/GitHub";
 //import pkg from "@/package.json";
 
 export const Nav = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
-
-  useLayoutEffect(() => {
-    const el = document.documentElement;
-
-    //https://tailwindcss.com/docs/dark-mode#supporting-system-preference-and-manual-selection
-    if (
-      localStorage.theme === "dark" ||
-      (!("theme" in localStorage) &&
-        window.matchMedia("(prefers-color-scheme: dark)").matches)
-    ) {
-      el.classList.add("dark");
-      setIsDarkMode(true);
-    } else {
-      setIsDarkMode(false);
-    }
-  }, []);
-
-  const toggleDark = () => {
-    const el = document.documentElement;
-    el.classList.toggle("dark");
-    setIsDarkMode((prev) => !prev);
-  };
-
+  const { setTheme } = useTheme();
   return (
     <div
       className={
@@ -40,28 +24,26 @@ export const Nav = () => {
         <JackBogart />
       </div>
       <div className={"ml-auto flex items-center gap-1"}>
-        <Button
-          onClick={() => {
-            //TODO
-            //How do I replace this?
-            //window.open(pkg.homepage, "_blank", "noopener noreferrer");
-          }}
-          variant={"ghost"}
-          className={"ml-auto flex items-center gap-1.5"}
-        >
-          <span>
-            <Github className={"size-4"} />
-          </span>
-          <span>Star on GitHub</span>
-        </Button>
-        <Button
-          onClick={toggleDark}
-          variant={"ghost"}
-          className={"ml-auto flex items-center gap-1.5"}
-        >
-          <span>{isDarkMode ? "sun" : "moon"}</span>
-          <span>{isDarkMode ? "Light" : "Dark"} Mode</span>
-        </Button>
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <Button variant="outline" size="icon">
+              <Sun className="h-[1.2rem] w-[1.2rem] rotate-0 scale-100 transition-all dark:-rotate-90 dark:scale-0" />
+              <Moon className="absolute h-[1.2rem] w-[1.2rem] rotate-90 scale-0 transition-all dark:rotate-0 dark:scale-100" />
+              <span className="sr-only">Toggle theme</span>
+            </Button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end">
+            <DropdownMenuItem onClick={() => setTheme("light")}>
+              Light
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setTheme("dark")}>
+              Dark
+            </DropdownMenuItem>
+            <DropdownMenuItem onClick={() => setTheme("system")}>
+              System
+            </DropdownMenuItem>
+          </DropdownMenuContent>
+        </DropdownMenu>
       </div>
     </div>
   );
