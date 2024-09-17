@@ -9,7 +9,6 @@ export const metadata: Metadata = {
   title: "Hi :)",
   description: "My Personal Website, welcome!",
   icons: [{ rel: "icon", url: "/favicon.ico" }],
-  themeColor: "#000000",
 };
 
 export default function RootLayout({
