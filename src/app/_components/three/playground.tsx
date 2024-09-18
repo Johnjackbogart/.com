@@ -6,7 +6,7 @@ import { TorusKnot } from "@react-three/drei";
 import { Physics, RigidBody } from "@react-three/rapier";
 
 export default function PlayGround() {
-  const rb = useRef<RigidBody>(null);
+  const rb = useRef(null);
   const tk = useRef(null);
 
   let p = 1;
