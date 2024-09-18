@@ -1,24 +1,48 @@
 "use client";
-import { Suspense } from "react";
-import { Canvas } from "@react-three/fiber";
-import { Box, TorusKnot } from "@react-three/drei";
-import { Physics, RigidBody, CuboidCollider } from "@react-three/rapier";
+import * as THREE from "three";
+import { useRef } from "react";
+import { useFrame } from "@react-three/fiber";
+import { TorusKnot } from "@react-three/drei";
+import { Physics, RigidBody } from "@react-three/rapier";
 
 export default function PlayGround() {
+  const rb = useRef<RigidBody>(null);
+  const tk = useRef(null);
+
+  let p = 1;
+  let q = 1;
+
+  useFrame((state, delta) => {
+    p = Math.ceil(
+      Math.abs(100 * Math.sin(0.01 * state.clock.getElapsedTime())),
+    );
+    q = Math.ceil(
+      Math.abs(200 * Math.sin(0.001 * state.clock.getElapsedTime())),
+    );
+
+    if (tk.current) {
+      tk.current.rotation.y = state.clock.getElapsedTime();
+      tk.current.rotation.x = state.clock.getElapsedTime() / 2;
+
+      //this is the only way...
+      //https://stackoverflow.com/questions/40933735/three-js-cube-geometry-how-to-update-parameters
+      tk.current.geometry.dispose();
+      tk.current.geometry = new THREE.TorusKnotGeometry(
+        2,
+        0.01,
+        1000,
+        100,
+        p,
+        q,
+      );
+    }
+  });
+
   return (
-    <Canvas>
-      <Suspense>
-        <Physics gravity={[0, 0, 0]} debug>
-          <RigidBody
-            colliders={"hull"}
-            restitution={2}
-            rotation={[0, 0.3, 2]}
-            angularVelocity={[1, 1, 1]}
-          >
-            <TorusKnot args={[1.5, 0.1, 1000, 10, 2, 5]} />
-          </RigidBody>
-        </Physics>
-      </Suspense>
-    </Canvas>
+    <Physics gravity={[0, 0, 0]}>
+      <RigidBody ref={rb} colliders={"hull"} restitution={2}>
+        <TorusKnot ref={tk} args={[0.1, 1, 1000, 10, p, q]} />
+      </RigidBody>
+    </Physics>
   );
 }
