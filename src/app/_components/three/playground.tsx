@@ -6,13 +6,12 @@ import { TorusKnot } from "@react-three/drei";
 import { Physics, RigidBody } from "@react-three/rapier";
 
 export default function PlayGround() {
-  const rb = useRef<RigidBody>(null);
-  const tk = useRef(null);
+  const tk = useRef<THREE.Mesh>(null);
 
   let p = 1;
   let q = 1;
 
-  useFrame((state, delta) => {
+  useFrame((state) => {
     p = Math.ceil(
       Math.abs(100 * Math.sin(0.01 * state.clock.getElapsedTime())),
     );
@@ -29,7 +28,7 @@ export default function PlayGround() {
       tk.current.geometry.dispose();
       tk.current.geometry = new THREE.TorusKnotGeometry(
         2,
-        0.01,
+        1.01,
         1000,
         100,
         p,
@@ -40,8 +39,11 @@ export default function PlayGround() {
 
   return (
     <Physics gravity={[0, 0, 0]}>
-      <RigidBody ref={rb} colliders={"hull"} restitution={2}>
-        <TorusKnot ref={tk} args={[0.1, 1, 1000, 10, p, q]} />
+      <RigidBody colliders={"hull"} restitution={2}>
+        <mesh ref={tk}>
+          <torusKnotGeometry args={[2, 1.01, 1000, 100, p, q]} />
+          <meshStandardMaterial color="black" metalness={0.6} roughness={0.4} />
+        </mesh>
       </RigidBody>
     </Physics>
   );
