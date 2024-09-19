@@ -28,7 +28,7 @@ export default function PlayGround() {
       tk.current.geometry.dispose();
       tk.current.geometry = new THREE.TorusKnotGeometry(
         2,
-        0.01,
+        1.01,
         1000,
         100,
         p,
@@ -41,7 +41,7 @@ export default function PlayGround() {
     <Physics gravity={[0, 0, 0]}>
       <RigidBody colliders={"hull"} restitution={2}>
         <mesh ref={tk}>
-          <torusKnotGeometry args={[2, 0.01, 1000, 100, p, q]} />
+          <torusKnotGeometry args={[2, 1.01, 1000, 100, p, q]} />
           <meshStandardMaterial color="black" metalness={0.6} roughness={0.4} />
         </mesh>
       </RigidBody>
