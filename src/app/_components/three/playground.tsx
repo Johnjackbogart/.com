@@ -3,6 +3,7 @@ import * as THREE from "three";
 import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Physics, RigidBody } from "@react-three/rapier";
+import { OrbitControls } from "@react-three/drei";
 
 import { Me } from "./Me";
 
@@ -41,6 +42,8 @@ export default function PlayGround() {
 
   return (
     <Physics gravity={[0, 0, 0]}>
+      <ambientLight intensity={5} />
+      <OrbitControls />
       <Me />
       <RigidBody colliders={"hull"} restitution={2}>
         <mesh ref={tk}>
