@@ -14,8 +14,11 @@ const darkFill: headerFill = { foreground: "#fff", background: "#000" };
 const lightFill: headerFill = { foreground: "#000", background: "#fff" };
 
 const JackBogart = (props: headerProps) => {
-  // this will handle case where theme is undefined, useTheme may return undefined
-  const fill: headerFill = props.theme === "dark" ? darkFill : lightFill;
+  const fill: headerFill = props.theme
+    ? props.theme === "dark"
+      ? darkFill
+      : lightFill
+    : darkFill;
 
   return (
     <svg
