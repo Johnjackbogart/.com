@@ -13,7 +13,7 @@ import JackBogart from "^/JackBogart";
 import Github from "^/GitHub";
 
 export const Nav = () => {
-  const { setTheme } = useTheme();
+  const { theme, setTheme } = useTheme();
   return (
     <div
       className={
@@ -21,7 +21,7 @@ export const Nav = () => {
       }
     >
       <div className={"mt-auto"}>
-        <JackBogart />
+        <JackBogart theme={theme} />
       </div>
       <div className={"ml-auto flex items-center gap-1"}>
         <Button
