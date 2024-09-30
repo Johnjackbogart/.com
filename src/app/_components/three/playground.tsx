@@ -4,6 +4,8 @@ import { useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Physics, RigidBody } from "@react-three/rapier";
 
+import { Me } from "./Me";
+
 export default function PlayGround() {
   const tk = useRef<THREE.Mesh>(null);
 
@@ -39,6 +41,7 @@ export default function PlayGround() {
 
   return (
     <Physics gravity={[0, 0, 0]}>
+      <Me />
       <RigidBody colliders={"hull"} restitution={2}>
         <mesh ref={tk}>
           <torusKnotGeometry args={[2, 0.001, 1000, 1000, p, q]} />
