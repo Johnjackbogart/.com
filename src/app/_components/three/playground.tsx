@@ -1,6 +1,6 @@
 "use client";
 import * as THREE from "three";
-import { useRef } from "react";
+import { useRef, useMemo } from "react";
 import { useFrame } from "@react-three/fiber";
 import { Physics, RigidBody } from "@react-three/rapier";
 import {
@@ -28,27 +28,22 @@ export default function PlayGround() {
       Math.abs(200 * Math.sin(0.0003 * state.clock.getElapsedTime())),
     );
 
-    if (tk.current) {
-      tk.current.rotation.y = 1 * state.clock.getElapsedTime();
-      //tk.current.rotation.x = (1 * state.clock.getElapsedTime()) / 2;
+    if (!tk.current) return;
+    tk.current.rotation.y = 1 * state.clock.getElapsedTime();
+    //tk.current.rotation.x = (1 * state.clock.getElapsedTime()) / 2;
 
-      //this is the only way...
-      //https://stackoverflow.com/questions/40933735/three-js-cube-geometry-how-to-update-parameters
-      tk.current.geometry.dispose();
-      tk.current.geometry = new THREE.TorusKnotGeometry(
-        2,
-        0.21,
-        10000,
-        10,
-        p,
-        q,
-      );
-    }
+    //this is the only way...
+    //https://stackoverflow.com/questions/40933735/three-js-cube-geometry-how-to-update-parameters
+    tk.current.geometry.dispose();
+    tk.current.geometry = new THREE.TorusKnotGeometry(2, 0.21, 10000, 10, p, q);
   });
 
   return (
     <Physics gravity={[0, 0, 0]}>
-      <Text color="green">yooo</Text>
+      {<DeformablePlane />}
+      <Text position={[0, 0, -10]} color="green">
+        yooo
+      </Text>
       <Line
         points={[
           [0, 0, 0],
@@ -73,5 +68,41 @@ export default function PlayGround() {
         </mesh>
       </RigidBody>
     </Physics>
+  );
+}
+
+function DeformablePlane() {
+  const meshRef = useRef<THREE.Mesh>(null);
+  const planeGeometry = useMemo(
+    () => new THREE.PlaneGeometry(10, 10, 100, 100),
+    [],
+  );
+
+  useFrame(({ clock }) => {
+    const time = clock.getElapsedTime();
+    if (!meshRef.current) return;
+    const positionAttribute = meshRef.current.geometry.attributes
+      .position as THREE.BufferAttribute;
+
+    for (let i = 0; i < positionAttribute.count; i++) {
+      const x = positionAttribute.getX(i);
+      const y = positionAttribute.getY(i);
+
+      // Example deformation function (wave effect)
+      const z = Math.sin(x * 2 + time) * Math.cos(y * 2 + time) * 0.5;
+
+      positionAttribute.setZ(i, z);
+    }
+
+    positionAttribute.needsUpdate = true; // Inform Three.js that the positions have changed
+
+    //meshRef.current.rotation.z = 0.01 * clock.getElapsedTime();
+    //meshRef.current.rotation.x = 0.01 * clock.getElapsedTime();
+  });
+
+  return (
+    <mesh rotation={[0, 0, Math.PI / 2]} ref={meshRef} geometry={planeGeometry}>
+      <MeshTransmissionMaterial thickness={2} backside backsideThickness={1} />
+    </mesh>
   );
 }
