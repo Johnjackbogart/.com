@@ -10,6 +10,7 @@ import {
   DragControls,
   MeshTransmissionMaterial,
 } from "@react-three/drei";
+import { easing } from "maath";
 
 import { Me } from "./Me";
 
@@ -40,6 +41,7 @@ export default function PlayGround() {
 
   return (
     <Physics gravity={[0, 0, 0]}>
+      <Rig />
       {<DeformablePlane />}
       <Text position={[0, 0, -10]} color="green">
         yooo
@@ -53,7 +55,6 @@ export default function PlayGround() {
       <ambientLight intensity={1} />
 
       <pointLight position={[0, 0, 0]} />
-      <OrbitControls />
       <DragControls>
         <Me />
       </DragControls>
@@ -102,7 +103,29 @@ function DeformablePlane() {
 
   return (
     <mesh rotation={[0, 0, Math.PI / 2]} ref={meshRef} geometry={planeGeometry}>
-      <MeshTransmissionMaterial thickness={2} backside backsideThickness={1} />
+      <MeshTransmissionMaterial
+        thickness={0.1}
+        backside
+        backsideThickness={0.1}
+        transmission={0.99}
+      />
     </mesh>
   );
+}
+
+//stolen from https://discourse.threejs.org/t/how-to-create-glass-material-that-refracts-elements-in-dom/53625/3
+function Rig() {
+  useFrame((state, delta) => {
+    easing.damp3(
+      state.camera.position,
+      [
+        Math.sin(-state.pointer.x) * 5,
+        state.pointer.y * 3.5,
+        5 + Math.cos(state.pointer.x) * 1,
+      ],
+      0.2,
+      delta,
+    );
+    state.camera.lookAt(0, 0, 0);
+  });
 }
