@@ -20,7 +20,19 @@ export default function PlayGround() {
   let p = 10;
   let q = 10;
 
-  useFrame((state) => {
+  useFrame((state, delta) => {
+    //stolen from https://discourse.threejs.org/t/how-to-create-glass-material-that-refracts-elements-in-dom/53625/3
+    easing.damp3(
+      state.camera.position,
+      [
+        Math.sin(-state.pointer.x) * 5,
+        state.pointer.y * 3.5,
+        5 + Math.cos(state.pointer.x) * 1,
+      ],
+      0.2,
+      delta,
+    );
+    state.camera.lookAt(0, 0, 0);
     p = Math.ceil(
       Math.abs(100 * Math.sin(0.0002 * state.clock.getElapsedTime())),
     );
@@ -41,8 +53,8 @@ export default function PlayGround() {
 
   return (
     <Physics gravity={[0, 0, 0]}>
-      <Rig />
-      {<DeformablePlane />}
+      <DeformablePlane />
+      <spotLight position={[0, 0, 0]} penumbra={10} castShadow angle={0.2} />
       <Text position={[0, 0, -10]} color="green">
         yooo
       </Text>
@@ -111,21 +123,4 @@ function DeformablePlane() {
       />
     </mesh>
   );
-}
-
-//stolen from https://discourse.threejs.org/t/how-to-create-glass-material-that-refracts-elements-in-dom/53625/3
-function Rig() {
-  useFrame((state, delta) => {
-    easing.damp3(
-      state.camera.position,
-      [
-        Math.sin(-state.pointer.x) * 5,
-        state.pointer.y * 3.5,
-        5 + Math.cos(state.pointer.x) * 1,
-      ],
-      0.2,
-      delta,
-    );
-    state.camera.lookAt(0, 0, 0);
-  });
 }
