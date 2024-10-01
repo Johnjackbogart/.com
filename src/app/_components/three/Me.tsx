@@ -4,7 +4,7 @@ Command: npx gltfjsx@6.5.2 -t public/me.glb
 */
 
 import * as THREE from "three";
-import { useRef, useMemo, Ref } from "react";
+import { useEffect, useRef, useMemo, Ref } from "react";
 import { useGraph } from "@react-three/fiber";
 import { useGLTF, useAnimations } from "@react-three/drei";
 import { GLTF, SkeletonUtils } from "three-stdlib";
@@ -38,6 +38,12 @@ export function Me(props: JSX.IntrinsicElements["group"]) {
   const clone = useMemo(() => SkeletonUtils.clone(scene), [scene]);
   const { nodes, materials } = useGraph(clone) as GLTFResult;
   const { actions } = useAnimations(animations, group);
+
+  useEffect(() => {
+    console.log(actions);
+    if (!actions && !actions.jump) return;
+    actions["Just_chilling_Clean"].play();
+  });
   return (
     <group ref={group as Ref<THREE.Group>} {...props} dispose={null}>
       <group name="Scene">
