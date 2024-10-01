@@ -41,7 +41,7 @@ export function Me(props: JSX.IntrinsicElements["group"]) {
 
   useEffect(() => {
     console.log(actions);
-    if (!actions && !actions.jump) return;
+    if (!actions) return;
     actions["Just_chilling_Clean"].play();
   });
   return (
