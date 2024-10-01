@@ -42,7 +42,7 @@ export function Me(props: JSX.IntrinsicElements["group"]) {
   useEffect(() => {
     console.log(actions);
     if (!actions) return;
-    actions["Just_chilling_Clean"].play();
+    actions["Just_chilling_Clean"]?.play();
   });
   return (
     <group ref={group as Ref<THREE.Group>} {...props} dispose={null}>
