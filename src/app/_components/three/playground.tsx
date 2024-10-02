@@ -10,53 +10,43 @@ import {
   MeshTransmissionMaterial,
   Html,
 } from "@react-three/drei";
-import { easing } from "maath";
 
 import { Me } from "./Me";
 
 export default function PlayGround() {
   const tk = useRef<THREE.Mesh>(null);
 
-  let p = 100;
-  let q = 10;
+  let p = 31;
+  let q = 5;
 
   useFrame((state, delta) => {
-    //stolen from https://discourse.threejs.org/t/how-to-create-glass-material-that-refracts-elements-in-dom/53625/3
-    easing.damp3(
-      state.camera.position,
-      [
-        Math.sin(-state.pointer.x) * 5,
-        state.pointer.y * 3.5,
-        10 + Math.cos(state.pointer.x) * 10,
-      ],
-      0.2,
-      delta,
-    );
-    state.camera.lookAt(0, 0, 0);
-    p = Math.ceil(
-      Math.abs(100 * Math.sin(0.0002 * state.clock.getElapsedTime())),
-    );
-
-    q = Math.ceil(
-      Math.abs(200 * Math.sin(0.0003 * state.clock.getElapsedTime())),
-    );
-
+    //    p = Math.ceil(
+    //      Math.abs(100 * Math.sin(0.0002 * state.clock.getElapsedTime())),
+    //    );
+    //
+    //    q = Math.ceil(
+    //      Math.abs(200 * Math.sin(0.0003 * state.clock.getElapsedTime())),
+    //    );
+    //
+    //
     if (!tk.current) return;
-    tk.current.rotation.y = 1 * state.clock.getElapsedTime();
+    tk.current.rotation.z = 1 * state.clock.getElapsedTime();
     //tk.current.rotation.x = (1 * state.clock.getElapsedTime()) / 2;
 
     //this is the only way...
     //https://stackoverflow.com/questions/40933735/three-js-cube-geometry-how-to-update-parameters
     tk.current.geometry.dispose();
-    tk.current.geometry = new THREE.TorusKnotGeometry(2, 0.21, 10000, 10, p, q);
+    tk.current.geometry = new THREE.TorusKnotGeometry(3, 0.21, 10000, 10, p, q);
   });
 
   return (
     <Physics gravity={[0, 0, 0]}>
       <spotLight position={[0, 0, 0]} penumbra={10} castShadow angle={0.2} />
-      <Text position={[0, 0, -10]} color="green">
+      <Text position={[0, 0, -1]} color="green">
         yoooo
-        <Html style={{ color: "transparent" }}>yoooo</Html>
+        <Html style={{ color: "transparent", fontSize: "6em" }} transform>
+          yoooo
+        </Html>
       </Text>
       <Line
         points={[
@@ -73,7 +63,7 @@ export default function PlayGround() {
       <DragControls>
         <RigidBody colliders={"hull"} restitution={2}>
           <mesh ref={tk}>
-            <torusKnotGeometry args={[2, 0.001, 1000, 1000, p, q]} />
+            <torusKnotGeometry args={[3, 0.001, 1000, 1000, p, q]} />
             <MeshTransmissionMaterial
               thickness={2}
               backside
