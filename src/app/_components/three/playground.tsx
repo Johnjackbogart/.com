@@ -5,10 +5,10 @@ import { useFrame } from "@react-three/fiber";
 import { Physics, RigidBody } from "@react-three/rapier";
 import {
   Text,
-  OrbitControls,
   Line,
   DragControls,
   MeshTransmissionMaterial,
+  Html,
 } from "@react-three/drei";
 import { easing } from "maath";
 
@@ -17,7 +17,7 @@ import { Me } from "./Me";
 export default function PlayGround() {
   const tk = useRef<THREE.Mesh>(null);
 
-  let p = 10;
+  let p = 100;
   let q = 10;
 
   useFrame((state, delta) => {
@@ -27,7 +27,7 @@ export default function PlayGround() {
       [
         Math.sin(-state.pointer.x) * 5,
         state.pointer.y * 3.5,
-        5 + Math.cos(state.pointer.x) * 1,
+        10 + Math.cos(state.pointer.x) * 10,
       ],
       0.2,
       delta,
@@ -53,10 +53,10 @@ export default function PlayGround() {
 
   return (
     <Physics gravity={[0, 0, 0]}>
-      <DeformablePlane />
       <spotLight position={[0, 0, 0]} penumbra={10} castShadow angle={0.2} />
       <Text position={[0, 0, -10]} color="green">
-        yooo
+        yoooo
+        <Html style={{ color: "transparent" }}>yoooo</Html>
       </Text>
       <Line
         points={[
@@ -70,16 +70,18 @@ export default function PlayGround() {
       <DragControls>
         <Me />
       </DragControls>
-      <RigidBody colliders={"hull"} restitution={2}>
-        <mesh ref={tk}>
-          <torusKnotGeometry args={[2, 0.001, 1000, 1000, p, q]} />
-          <MeshTransmissionMaterial
-            thickness={2}
-            backside
-            backsideThickness={1}
-          />
-        </mesh>
-      </RigidBody>
+      <DragControls>
+        <RigidBody colliders={"hull"} restitution={2}>
+          <mesh ref={tk}>
+            <torusKnotGeometry args={[2, 0.001, 1000, 1000, p, q]} />
+            <MeshTransmissionMaterial
+              thickness={2}
+              backside
+              backsideThickness={1}
+            />
+          </mesh>
+        </RigidBody>
+      </DragControls>
     </Physics>
   );
 }
