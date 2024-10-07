@@ -1,5 +1,6 @@
 "use client";
 
+import { useRef } from "react";
 import * as THREE from "three";
 import { useFrame } from "@react-three/fiber";
 import {
@@ -7,31 +8,40 @@ import {
   EffectComposer,
   N8AO,
   TiltShift2,
-  ChromaticAberration,
 } from "@react-three/postprocessing";
-import { BlendFunction } from "postprocessing";
+import { ChromaticAberration } from "react-three-me";
+import { ChromaticAberrationEffect, BlendFunction } from "postprocessing";
 import { easing } from "maath";
 
 export default function Effects() {
+  const chromaRef = useRef<ChromaticAberrationEffect>(null);
+
   useFrame((state, delta) => {
     //stolen from https://discourse.threejs.org/t/how-to-create-glass-material-that-refracts-elements-in-dom/53625/3
     easing.damp3(
       state.camera.position,
       [
-        Math.sin(-state.pointer.x) / 4,
-        state.pointer.y / 2,
-        6 + Math.cos(state.pointer.x) * 1,
+        Math.sin(-state.pointer.x) * 5,
+        state.pointer.y * 2,
+        0.5 + Math.cos(state.pointer.x) * 5,
       ],
       0.1,
       delta,
     );
     state.camera.lookAt(0, 0, 0);
+
+    if (!chromaRef.current) return;
+    const x = Math.sin(-state.pointer.x) / 100;
+    const y = state.pointer.y / 100;
+    const newOffset = new THREE.Vector2(x, y);
+    chromaRef.current.offset = newOffset;
   });
   return (
-    <EffectComposer enableNormalPass={false}>
+    <EffectComposer enableNormalPass={true}>
       <ChromaticAberration
+        ref={chromaRef}
         blendFunction={BlendFunction.NORMAL}
-        offset={new THREE.Vector2(0.0001, 0.0001)}
+        offset={new THREE.Vector2(0.01, 0.01)}
         radialModulation={false}
         modulationOffset={1.0}
       />

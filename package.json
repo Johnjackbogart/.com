@@ -14,7 +14,8 @@
     "dev:ts": "concurrently -n NEXT,TS -c magenta,cyan \"npm run dev\" \"npm run ts\"",
     "ts": "tsc --noEmit --incremental --preserveWatchOutput --pretty --watch",
     "lint": "next lint",
-    "start": "next start"
+    "start": "next start",
+    "postinstall": "cd ./node_modules/react-three-me && npm install && npm run build"
   },
   "dependencies": {
     "@radix-ui/react-dropdown-menu": "^2.1.1",
@@ -42,6 +43,7 @@
     "postprocessing": "^6.36.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-three-me": "https://github.com/Johnjackbogart/react-postprocessing.git",
     "server-only": "^0.0.1",
     "superjson": "^2.2.1",
     "tailwind-merge": "^2.4.0",

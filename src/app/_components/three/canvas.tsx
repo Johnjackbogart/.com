@@ -13,6 +13,8 @@ export default function ThreeCanvas({
       onCreated={({ gl }) => {
         gl.setClearColor(new THREE.Color(), 0.4);
       }}
+      eventPrefix="client"
+      camera={{ position: [0, 0, 0], fov: 1 }}
     >
       <Effects />
       {children}

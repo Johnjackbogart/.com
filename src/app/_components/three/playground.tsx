@@ -16,8 +16,8 @@ import { Me } from "./Me";
 export default function PlayGround() {
   const tk = useRef<THREE.Mesh>(null);
 
-  let p = 31;
-  let q = 5;
+  const p = 31;
+  const q = 5;
 
   useFrame((state, delta) => {
     //    p = Math.ceil(
@@ -36,15 +36,18 @@ export default function PlayGround() {
     //this is the only way...
     //https://stackoverflow.com/questions/40933735/three-js-cube-geometry-how-to-update-parameters
     tk.current.geometry.dispose();
-    tk.current.geometry = new THREE.TorusKnotGeometry(3, 0.21, 10000, 10, p, q);
+    tk.current.geometry = new THREE.TorusKnotGeometry(5, 0.21, 10000, 10, p, q);
   });
 
   return (
     <Physics gravity={[0, 0, 0]}>
       <spotLight position={[0, 0, 0]} penumbra={10} castShadow angle={0.2} />
-      <Text position={[0, 0, -1]} color="green">
+      <Text position={[0, 0, -10]} color="green">
         yoooo
-        <Html style={{ color: "transparent", fontSize: "6em" }} transform>
+        <Html
+          style={{ color: "transparent", fontSize: "6em" }}
+          transform={true}
+        >
           yoooo
         </Html>
       </Text>
@@ -63,7 +66,7 @@ export default function PlayGround() {
       <DragControls>
         <RigidBody colliders={"hull"} restitution={2}>
           <mesh ref={tk}>
-            <torusKnotGeometry args={[3, 0.001, 1000, 1000, p, q]} />
+            <torusKnotGeometry args={[5, 0.001, 1000, 1000, p, q]} />
             <MeshTransmissionMaterial
               thickness={2}
               backside
