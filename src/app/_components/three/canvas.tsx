@@ -2,7 +2,7 @@
 
 import { Canvas } from "@react-three/fiber";
 import * as THREE from "three";
-import Effects from "./effects";
+import Effects from "./effects/effects";
 
 export default function ThreeCanvas({
   children,
@@ -14,7 +14,7 @@ export default function ThreeCanvas({
         gl.setClearColor(new THREE.Color(), 0.4);
       }}
       eventPrefix="client"
-      camera={{ position: [0, 0, 0], fov: 1 }}
+      camera={{ position: [0, 0, 0], fov: 100 }}
     >
       <Effects />
       {children}

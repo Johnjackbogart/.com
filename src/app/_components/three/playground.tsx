@@ -20,23 +20,8 @@ export default function PlayGround() {
   const q = 5;
 
   useFrame((state, delta) => {
-    //    p = Math.ceil(
-    //      Math.abs(100 * Math.sin(0.0002 * state.clock.getElapsedTime())),
-    //    );
-    //
-    //    q = Math.ceil(
-    //      Math.abs(200 * Math.sin(0.0003 * state.clock.getElapsedTime())),
-    //    );
-    //
-    //
     if (!tk.current) return;
     tk.current.rotation.z = 1 * state.clock.getElapsedTime();
-    //tk.current.rotation.x = (1 * state.clock.getElapsedTime()) / 2;
-
-    //this is the only way...
-    //https://stackoverflow.com/questions/40933735/three-js-cube-geometry-how-to-update-parameters
-    tk.current.geometry.dispose();
-    tk.current.geometry = new THREE.TorusKnotGeometry(5, 0.21, 10000, 10, p, q);
   });
 
   return (
@@ -66,7 +51,7 @@ export default function PlayGround() {
       <DragControls>
         <RigidBody colliders={"hull"} restitution={2}>
           <mesh ref={tk}>
-            <torusKnotGeometry args={[5, 0.001, 1000, 1000, p, q]} />
+            <torusKnotGeometry args={[5, 0.5, 1000, 100, p, q]} />
             <MeshTransmissionMaterial
               thickness={2}
               backside
