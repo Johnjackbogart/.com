@@ -1,8 +1,9 @@
 "use client";
-
+import { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
 import * as THREE from "three";
 import Effects from "./effects/effects";
+import Loading from "./Loading";
 
 export default function ThreeCanvas({
   children,
@@ -16,8 +17,10 @@ export default function ThreeCanvas({
       eventPrefix="client"
       camera={{ position: [0, 0, 0], fov: 100 }}
     >
-      <Effects />
-      {children}
+      <Suspense fallback={<Loading />}>
+        <Effects />
+        {children}
+      </Suspense>
     </Canvas>
   );
 }
